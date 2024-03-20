@@ -1,3 +1,23 @@
+<?php
+
+include 'db.php';
+
+$sql = "SELECT * FROM skills";
+$result = $conn->query($sql);
+
+$skills = array();
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $skills[] = $row['skill']; 
+    }
+}
+
+
+$conn->close();
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -20,7 +40,60 @@
     <!--=============== CSS ===============-->
     <link rel="stylesheet" href="assets/css/styles.css" />
 
-    <title>Contact - Amanda Jeganathan</title>
+    <style>
+      
+    .perfil__content2{  
+      width: 180px;
+      height:180px;
+      border: 10px solid var(--first-color);
+      border-radius: 50%;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      background: linear-gradient(180deg,
+                               hsl(var(--hue), 90%, 80%)
+                               hsl(var(--hue), 90%, 30%));
+
+    }
+
+    .perfil__img2{
+      width: 220px;
+      height: 165px;
+      
+
+      
+      
+    }
+
+    .skills-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+    }
+
+    .skill-card {
+        background-color: black;
+        padding: 10px 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .skill-name {
+        font-weight: bold;
+        color: var(--first-color);
+    }
+
+    a:link {
+      color: var(--first-color);
+    }
+
+    
+    
+    </style>
+
+    <title>About - Amanda Jeganathan</title>
   </head>
   <body>
     <!--==================== HEADER ====================-->
@@ -37,10 +110,7 @@
             <li class="nav__item">
               <a href="about.php" class="nav__link">About Me</a>
             </li>
-            <br />
-            <li class="nav__item">
-              <a href="work.html" class="nav__link">Portfolio</a>
-            </li>
+            
             <br />
             <li class="nav__item">
               <a href="contact.html" class="button">Contact Me</a>
@@ -55,8 +125,9 @@
         </div>
 
         <div class="nav__actions">
-          <i class="ri-moon-line change-theme" id="theme-button"></i>
           <!--Theme button-->
+
+          <i class="ri-moon-line change-theme" id="theme-button"></i>
 
           <!--Toggle button-->
           <div class="nav__toggle" id="nav-toggle">
@@ -65,65 +136,61 @@
         </div>
       </nav>
     </header>
-    <!--==================== MAIN ====================-->
+    
     <main class="main">
-      <!--==================== CONTACT ====================-->
-      <section class="contact section">
-        <h2 class="section__title">
-          Let's Talk <br />
-          About Your Project
+      <!--==================== ABOUT ====================-->
+      <section class="services section">
+        <center>
+          <div class="perfil__content2">
+            <img
+                src="assets/img/mandaapic.jpg"
+                alt="image"
+                class="perfil__img2"
+              /> 
+            
+          </div>
+        </center>
+        <br>
+          <h2 class="section__title">
+          Amanda Jeganathan<br />
+          Computer Science Undergraduate
         </h2>
-
-        <div class="contact__page container grid">
-          <form action="" class="contact__form grid" id="contact-form">
-            <div class="contact__group grip">
-              <div class="contact__box">
-                <input
-                  type="text"
-                  name="user_name"
-                  id="name"
-                  required
-                  placeholder="Enter your name"
-                  class="contact__input"
-                />
-                <label for="name" class="contact__label">First Name</label>
-              </div>
-              <br />
-              <div class="contact__box">
-                <input
-                  type="email"
-                  name="user_email"
-                  id="email"
-                  required
-                  placeholder="Enter your email"
-                  class="contact__input"
-                />
-                <label for="email" class="contact__label">Email Address</label>
-              </div>
-            </div>
-
-            <div class="contact__box contact__area">
-              <textarea
-                name="user_message"
-                id="message"
-                required
-                placeholder="Write your message"
-                class="contact__input"
-              ></textarea>
-              <label for="email" class="contact__label">Message</label>
-            </div>
-
-            <p class="contact_message" id="contact-message"></p>
-
-            <button type="submit" class="contact__send button">
-              Send Message
-            </button>
-          </form>
-        </div>
       </section>
+
+      <section class="skills section">
+    <h3 class="section__title">My Skills</h3>
+    <div class="skills-container">
+      
+        <?php foreach ($skills as $skill): ?>
+            <div class="skill-card">
+        
+                <div class="skill-name"><?php echo $skill; ?></div>
+        
+            </div>
+        <?php endforeach; ?>
+      
+    </div>
+    <br>
+    <center>
+      <div class="crud">
+    <a href="editskills.php">
+    <i class="ri-edit-line"></i>
+    </a>
+    <a href="add.php">
+    <i class="ri-add-circle-line"></i>
+    </a>
+    <a href="delete.php">
+    <i class="ri-delete-bin-line"></i>
+    </a>
+        </div>
+        </center>
+
+</section>
+
     </main>
 
     <!--==================== FOOTER ====================-->
+
     <footer class="footer">
       <div class="footer__container container grid">
         <div class="footer__content grid">
@@ -167,14 +234,7 @@
         </div>
       </div>
     </footer>
-
     <!--=============== MAIN JS ===============-->
     <script src="assets/js/main.js"></script>
-
-    <!--=============== EMAIL JS ===============-->
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-
-    <!--=============== CONTACT JS ===============-->
-    <script src="assets/js/contact.js"></script>
   </body>
 </html>

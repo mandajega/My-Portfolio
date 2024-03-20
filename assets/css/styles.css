@@ -185,6 +185,7 @@ body.dark-theme{
 
 .section {
   padding-block: 5rem 1rem;
+  
 }
 .section__title {
   font-size: var(--h1-font-size);
@@ -221,6 +222,7 @@ body.dark-theme{
 
 .perfil__img{
   width: 180px;
+  
   
   
   
@@ -1057,6 +1059,7 @@ row-gap: 2rem;
 
     .perfil__img{
       width: 300px;
+      
       
     }
 
