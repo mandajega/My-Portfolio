@@ -12,6 +12,17 @@ if ($result->num_rows > 0) {
     }
 }
 
+$sql = "SELECT * FROM projects";
+$result = $conn->query($sql);
+
+$projects = array();
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $projects[] = $row; 
+    }
+}
+
+
 
 $conn->close();
 
@@ -74,7 +85,7 @@ $conn->close();
     }
 
     .skill-card {
-        background-color: black;
+        background-color: #D1F2EB;
         padding: 10px 20px;
         border-radius: 8px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -88,6 +99,31 @@ $conn->close();
     a:link {
       color: var(--first-color);
     }
+
+.projects-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.project {
+  background-color: #D1F2EB;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.project-title {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+  color: var(--first-color);
+}
+
+.project-description {
+  font-size: 1em;
+  color: #666;
+}
+
 
     
     
@@ -176,15 +212,26 @@ $conn->close();
     <a href="editskills.php">
     <i class="ri-edit-line"></i>
     </a>
-    <a href="add.php">
+    <a href="addskills.php">
     <i class="ri-add-circle-line"></i>
     </a>
-    <a href="delete.php">
+    <a href="deleteskills.php">
     <i class="ri-delete-bin-line"></i>
     </a>
         </div>
         </center>
 
+</section>
+<section class="projects section">
+  <h3 class="section__title">My Projects</h3>
+  <div class="projects-container">
+    <?php foreach ($projects as $project): ?>
+      <div class="project">
+        <h4 class="project-title"><?php echo $project['proj_title']; ?></h4>
+        <p class="project-description"><?php echo $project['proj_desc']; ?></p>
+      </div>
+    <?php endforeach; ?>
+  </div>
 </section>
 
     </main>
