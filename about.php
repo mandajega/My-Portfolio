@@ -229,9 +229,25 @@ $conn->close();
       <div class="project">
         <h4 class="project-title"><?php echo $project['proj_title']; ?></h4>
         <p class="project-description"><?php echo $project['proj_desc']; ?></p>
+        <a href="<?php echo $project['proj_link']; ?>" target="_blank">Link</a>
       </div>
     <?php endforeach; ?>
   </div>
+<br>
+  <center>
+      <div class="crud">
+    <a href="editprojects.php">
+    <i class="ri-edit-line"></i>
+    </a>
+    <a href="addprojects.php">
+    <i class="ri-add-circle-line"></i>
+    </a>
+    <a href="deleteprojects.php">
+    <i class="ri-delete-bin-line"></i>
+    </a>
+        </div>
+        </center>
+
 </section>
 
     </main>
