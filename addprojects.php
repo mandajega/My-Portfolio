@@ -31,6 +31,17 @@
             transform: translateY(-2px);
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
+
+        input {
+            background-color: var(--first-color); /* Change this to the desired color */
+            color: black; /* Change text color if necessary */
+            border: 1px solid #ccc; /* Add border for better visibility */
+            padding: 5px; /* Add padding for space around text */
+            font-size: 16px; /* Set font size */
+            width: 200px; /* Set width as per your requirement */
+            /* Add more styles as needed */
+        }
+
       </style>
     <title>Add Skill - Amanda Jeganathan</title>
 </head>
