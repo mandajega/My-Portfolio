@@ -35,11 +35,14 @@
         input {
             background-color: var(--first-color); /* Change this to the desired color */
             color: black; /* Change text color if necessary */
-            border: 1px solid #ccc; /* Add border for better visibility */
-            padding: 5px; /* Add padding for space around text */
-            font-size: 16px; /* Set font size */
-            width: 200px; /* Set width as per your requirement */
-            /* Add more styles as needed */
+            border: 1px solid black; 
+            padding: 5px; 
+            font-size: 16px; 
+            width: 300px;
+        }
+
+        textarea {
+        border: 1px solid black;
         }
 
       </style>
@@ -95,8 +98,8 @@
     
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
-        if (empty($_POST['skill'])) {
-            $errors = "Skill field is required.";
+        if (empty($_POST['proj_title'])) {
+            $errors = "All fields are required.";
         } else {
                 $proj_title = mysqli_real_escape_string($conn, $_POST['proj_title']);
                 $proj_desc = mysqli_real_escape_string($conn, $_POST['proj_desc']);
@@ -104,7 +107,7 @@
                 
             
     
-            $sql = "INSERT INTO projects (proj_title, proj_desc, proj_link) VALUES ('$proj_title, $proj_desc, $proj_link')";
+            $sql = "INSERT INTO projects (proj_title, proj_desc, proj_link) VALUES ('$proj_title', '$proj_desc', '$proj_link')";
             if ($conn->query($sql) === TRUE) {
 
               header("Location: about.php");
@@ -128,12 +131,15 @@
     <?php if (!empty($success)): ?>
         <p style="color: green;"><?php echo $success; ?></p>
     <?php endif; ?>
-    <form method="post">
+    <form method="post" action="addprojects.php">
       <center>
         <label for="skill">Project Details:</label><br><br>
-        <input type="text" id="proj_title" name="proj_title"><br><br>
-        <input type="text" id="proj_desc" name="proj_desc"><br><br>
-        <input type="text" id="proj_link" name="proj_link"><br><br>
+        <p>Project Title:</p>
+        <input type="text" id="proj_title" name="proj_title" required><br><br>
+        <p>Project Description:</p>
+        <textarea rows="15" cols="30" id="proj_desc" name="proj_desc" required></textarea>
+        <p>Project Link:</p>
+        <input type="text" id="proj_link" name="proj_link" required><br><br>
         
         <button type="submit" class="save-button">Add Project</button>
     </center>
