@@ -22,7 +22,7 @@
         }
 
         th, td {
-            padding: 12px;
+            padding: 24px;
             text-align: left;
             border-bottom: 1px solid #ddd;
         }
@@ -94,58 +94,61 @@
     </header>
 
     <main class="main">
-        <?php
-        
-        include 'db.php';
+    <?php
+include 'db.php';
 
-        
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        
-            foreach ($_POST['skills'] as $id => $skill) {
-                $sql = "UPDATE skills SET skill = '$skill' WHERE id = $id";
-                $conn->query($sql);
-            }
-        
-            header("Location: about.php");
-            exit();
-        }
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    foreach ($_POST['projects'] as $id => $project) {
+        $proj_title = $conn->real_escape_string($project['proj_title']); 
+        $proj_desc = $conn->real_escape_string($project['proj_desc']); 
+        $proj_link = $conn->real_escape_string($project['proj_link']); 
 
-        
-        $sql = "SELECT * FROM skills";
-        $result = $conn->query($sql);
+        $sql = "UPDATE projects SET proj_title = '$proj_title', proj_desc = '$proj_desc', proj_link = '$proj_link' WHERE proj_id = $id";
+        $conn->query($sql);
+    }
 
-        $skills = array();
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                $skills[] = $row;
-            }
-        }
+    header("Location: about.php");
+    exit();
+}
 
-        
-        $conn->close();
-        ?>
-        
+$sql = "SELECT * FROM projects";
+$result = $conn->query($sql);
+
+$projects = array();
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $projects[] = $row;
+    }
+}
+
+$conn->close();
+?>
+ 
         <!--==================== Edit Skills ====================-->
         <section class="edit-skills section">
             <h1 class="section__title">Edit Skills</h1>
             <form method="post">
                 <center>
                 <table>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Skill</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($skills as $skill): ?>
-                            <tr>
-                                <td><?php echo $skill['id']; ?></td>
-                                <td><input type="text" name="skills[<?php echo $skill['id']; ?>]" value="<?php echo $skill['skill']; ?>"></td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
+    <thead>
+        <tr>
+            <th>Project ID</th>
+            <th>Project Title</th>
+            <th>Project Description</th>
+            <th>Project Link</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($projects as $project): ?>
+            <tr>
+                <td><?php echo $project['proj_id']; ?></td>
+                <td><input type="text" name="projects[<?php echo $project['proj_id']; ?>][proj_title]" value="<?php echo $project['proj_title']; ?>"></td>
+                <td><input type="text" name="projects[<?php echo $project['proj_id']; ?>][proj_desc]" value="<?php echo $project['proj_desc']; ?>"></td>
+                <td><input type="text" name="projects[<?php echo $project['proj_id']; ?>][proj_link]" value="<?php echo $project['proj_link']; ?>"></td>
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
                        <br><br> 
                 <button type="submit" class="save-button">Save</button>
                         </center>
